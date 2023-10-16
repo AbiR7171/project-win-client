@@ -1,0 +1,8 @@
+/* .deposit{
+    height: 70vh;
+ } */
+.left-border{
+    border-left: 3px solid yellow;
+    padding: 3px;
+    margin: 3px;
+}
