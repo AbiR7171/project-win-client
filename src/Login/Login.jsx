@@ -2,10 +2,10 @@ import React, { createContext, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-export const NumberContext = createContext();
 
-const Login = ({children}) => {
-    // const navigate = useNavigate();
+
+const Login = () => {
+    const navigate = useNavigate();
     const numberRef = useRef();
     const [moNumber, setNumber]=useState()
 
@@ -21,7 +21,7 @@ const Login = ({children}) => {
                 showConfirmButton: false,
                 timer: 1500
             });
-            // navigate('/layout');
+            navigate(`/layout/${numberRef.current.value}`);
 
         } else {
             Swal.fire({
@@ -36,11 +36,11 @@ const Login = ({children}) => {
 
     }
     return (
-        <NumberContext.Provider value={moNumber}>
+       
              <div className='w-full h-[100vh] bg-gradient-to-r from-blue-700 via-blue-800 to-gray-900'>
             <div className='flex gap-2 justify-center items-center h-full'>
 
-                <input ref={numberRef} type="text" placeholder="Enter Your Mobile Number" className="input input-bordered input-secondary w-full max-w-xs" />
+                <input ref={numberRef} type="number" placeholder="Enter Your Mobile Number" className="input input-bordered input-secondary w-full max-w-xs" />
                 <button onClick={handleNumber} className='bg-gradient-to-r from-red-500 to-red-800  p-3 px-10 text-white rounded'>Login</button>
 
 
@@ -49,8 +49,7 @@ const Login = ({children}) => {
        
         </div>
 
-        {children}
-        </NumberContext.Provider>
+        
     );
 };
 

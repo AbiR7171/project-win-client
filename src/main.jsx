@@ -7,6 +7,16 @@ import {
 } from "react-router-dom";
 import Layout from './Layout/Layout';
 import Login from './Login/Login';
+import Home from './Componets/Home/Home';
+import {
+ 
+  QueryClient,
+  QueryClientProvider,
+} from '@tanstack/react-query'
+
+
+// Create a client
+const queryClient = new QueryClient()
 
 
 const router = createBrowserRouter([
@@ -15,14 +25,18 @@ const router = createBrowserRouter([
     element: <Login></Login>,
   },
   {
-    path:'/layout',
-    element:<Layout></Layout>
+    path:'/layout/:id',
+    element:<Home/>
   }
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-  <Login>
-  <RouterProvider router={router} />
-  </Login>
+  <React.StrictMode> 
+
+   <QueryClientProvider client={queryClient}>
+ 
+  <RouterProvider router={router} /> 
+
+  </QueryClientProvider>
+ 
   </React.StrictMode>,
 )

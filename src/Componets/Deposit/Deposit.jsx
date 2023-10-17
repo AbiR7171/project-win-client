@@ -7,19 +7,31 @@ import './Deposit.css';
 import axios from 'axios';
 import { useContext, useEffect, useRef, useState } from 'react';
 import moment from 'moment/moment';
-import { NumberContext } from '../../Login/Login';
+import { useParams } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import useBank from '../Hooks/useBank';
+
+
 
 const Deposit = () => { 
 
 
-    const [bank, setBank]=useState([]);
+   
     const [number, setNumber]=useState();
-    const [deposit,setDeposit]=useState(0);
-    const [trx,setTrx]=useState('');
-    const moNumber = useContext(NumberContext);
+    const [deposit,setDeposit]=useState();
+    const [trx,setTrx]=useState();
+    const[method, setMethod]=useState()
+    const[show, setShow]=useState(true)
+    const[bank]=useBank();
 
-    console.log(moNumber);
+    console.log(bank);
+  
+  
+    const getId = useParams();
+    console.log(getId, "deposite");
 
+    
+   
     
 
 
@@ -27,61 +39,237 @@ const Deposit = () => {
     const trxRef=useRef();
 
  
-    useEffect(()=>{
-
-        axios.get('http://localhost:5000/bank')
-        .then(res => {
-          console.log(res.data); 
-          setBank(res.data)
-          
-        }) 
-    },[])
+  
 
 
     const handleBkash = ()=>{
               
           const bkashNumber = bank?.find(i => i.method === "bkash");
         //   console.log(bkashNumber.number);
-          setNumber(bkashNumber.number)
+          if(bkashNumber.status === "active"){ 
+
+            setMethod('bkash')
+            setNumber(bkashNumber?.number)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'clicked'
+              })
+          }else{
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'This payment method Not active'
+              })
+          }
+           
     }
     const handleNogod = ()=>{
               
           const nogodNumber = bank?.find(i => i.method === "nogod");
-        //   console.log(nogodNumber.number);
-          setNumber(nogodNumber.number)
+        //   console.log(nogodNumber.number); 
+        if(nogodNumber.status === "active"){ 
+
+            setMethod("nogod")
+            setNumber(nogodNumber?.number)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'clicked'
+              })
+          }else{
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'This payment method Not active'
+              })
+          }
+         
     }
     const handleRocket = ()=>{
               
           const rocketNumber = bank?.find(i => i.method === "rocket");
-         
-          setNumber(rocketNumber.number)
+          if(rocketNumber.status === "active"){ 
+
+            setMethod('rocket')
+           setNumber(rocketNumber?.number)
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'clicked'
+              })
+          }else{
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'This payment method Not active'
+              })
+          }
+        
     }
+
     const handleUpay = ()=>{
               
           const upayNumber = bank?.find(i => i.method === "upay");
-         
-          setNumber(upayNumber.number)
+       
+
+          if(upayNumber?.status === "active"){ 
+
+            setMethod('upay')
+            setNumber(upayNumber?.number)
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'clicked'
+              })
+          }else{
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'error',
+                title: 'This payment method Not active'
+              })
+          }
+        
     }
 
     const handleDepositRef=()=>{
         const depositData=depositRef.current.value;
         setDeposit(depositData);
+        setShow(false)
         
     }
     const handleTrxAndDepositData=()=>{
         const trxData=depositRef.current.value;
         setTrx(trxData);
         axios.post('http://localhost:5000/trx',{
-            deposit,trx,date:moment().format('YYYY-MM-DD hh:mm:ss')
+            amount:deposit,trx:trxData,date:moment().format('YYYY-MM-DD hh:mm:ss'),
+            id:getId?.id,paymentMethod:method,status:"pending",method:"deposit" 
+
         })
         .then(res=>{
             console.log(res.data);
+            if(res.data.insertedId){
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false,
+                    timer: 3000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                      toast.addEventListener('mouseenter', Swal.stopTimer)
+                      toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                  })
+                  
+                  Toast.fire({
+                    icon: 'success',
+                    title: 'successfully'
+                  })
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong! please try again',
+                    
+                  })
+            }
         })
         
     }
     // useEffect(()=>{
        
     // },[])
+
+  
 
 
     return (
@@ -133,11 +321,13 @@ const Deposit = () => {
                         <button onClick={handleDepositRef} className='btn px-3 py-1 text text-white bg-green-700 rounded'>Payment</button>
                     </div>
                 </div>
-                {/* <div className="border border-spacing-4 mt-2"></div> */}
+                 <div className="border border-spacing-4 mt-2"></div> 
 
 
                 {/* order information section  */}
-                <div>
+          <div className={show && "hidden"}>
+
+          <div>
                     <p className="text-yellow-500 text-xl ms-3 left-border">Order Information</p>
                     <div className="border border-spacing-2 mt-2"></div>
                 </div>
@@ -162,11 +352,13 @@ const Deposit = () => {
                 <div>
                     <input ref={trxRef} type="text" className='p-2 my-3 rounded w-full bg-gray-600 outline-orange-600' name="" id="" placeholder='Trx :' />
                 </div>
-            </div>
-            <div className="border border-spacing-5 mt-2"></div>
+                <div className="border border-spacing-5 mt-2"></div>
             <div className='py-6'>
                 <button onClick={handleTrxAndDepositData} className='flex justify-center px-3 py-2 my-3 text-white bg-green-700 rounded w-full fw-bold'>Submitted</button>
             </div>
+            </div>
+           
+          </div>
         </div>
 
 
