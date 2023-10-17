@@ -10,6 +10,7 @@ import moment from 'moment/moment';
 import { useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import useBank from '../Hooks/useBank';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 
 
@@ -23,12 +24,36 @@ const Deposit = () => {
     const[method, setMethod]=useState()
     const[show, setShow]=useState(true)
     const[bank]=useBank();
+    const[copied, setCopied]=useState(false)
 
     console.log(bank);
   
   
     const getId = useParams();
     console.log(getId, "deposite");
+
+
+    const handleCopy =()=>{
+         setCopied(true);
+         if(copied){
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+              })
+              
+              Toast.fire({
+                icon: 'success',
+                title: 'copied'
+              })
+         }
+    }
 
     
    
@@ -338,11 +363,16 @@ const Deposit = () => {
                     <div className='mt-3 text-white'>
                         <div className='flex gap-2'>
                             <p className='text-xl'>{number}</p>
-                            <Icon className='text-2xl' icon="akar-icons:copy" />
+                           <CopyToClipboard text={number}>
+                             <Icon onClick={handleCopy} className='text-2xl' icon="akar-icons:copy" />
+                           </CopyToClipboard>
                         </div>
                         <div className='flex gap-2'>
-                            <p className='text-xl'>{deposit}</p>
-                            <Icon className='text-2xl' icon="akar-icons:copy" />
+                        <p className='text-xl'>{deposit}</p>
+                           <CopyToClipboard text={deposit}>
+                           <Icon onClick={handleCopy} className='text-2xl' icon="akar-icons:copy" />
+                           </CopyToClipboard>
+                          
                         </div>
 
 
