@@ -20,7 +20,13 @@ const Withdraw = () => {
     console.log(id, "withdraw");
 
 
-    const withdrawRef = useRef()
+    const withdrawRef = useRef();
+
+    const bkashNumber = bank?.find(i => i.method === "bkash");
+    const nogodNumber = bank?.find(i => i.method === "nogod");
+    const rocketNumber = bank?.find(i => i.method === "rocket");
+    const upayNumber = bank?.find(i => i.method === "upay");
+     
 
 
 
@@ -28,7 +34,7 @@ const Withdraw = () => {
    
     const handleBkash = ()=>{
               
-        const bkashNumber = bank?.find(i => i.method === "bkash");
+       
       //   console.log(bkashNumber.number);
         if(bkashNumber.status === "active"){ 
 
@@ -72,7 +78,7 @@ const Withdraw = () => {
   }
   const handleNogod = ()=>{
             
-        const nogodNumber = bank?.find(i => i.method === "nogod");
+        
       //   console.log(nogodNumber.number); 
       if(nogodNumber.status === "active"){ 
 
@@ -116,7 +122,7 @@ const Withdraw = () => {
   }
   const handleRocket = ()=>{
             
-        const rocketNumber = bank?.find(i => i.method === "rocket");
+     
         if(rocketNumber.status === "active"){ 
 
           setMethod('rocket')
@@ -161,7 +167,7 @@ const Withdraw = () => {
 
   const handleUpay = ()=>{
             
-        const upayNumber = bank?.find(i => i.method === "upay");
+    
      
 
         if(upayNumber?.status === "active"){ 
@@ -209,7 +215,7 @@ const Withdraw = () => {
   const handleWithDraw = ()=>{
                   
 
-             axios.post('http://localhost:5000/trx',{
+             axios.post('https://win-bdt-server-new.vercel.app/trx',{
                     id:id.id,
                     date:moment().format("YYYY-MM-DD hh:mm:ss"),
                     amount:withdrawRef.current.value,
@@ -248,19 +254,18 @@ const Withdraw = () => {
 
             {/* logo container  */}
 
-
             <div className='flex justify-around p-4 mt-5'>
-                <div onClick={handleBkash}>
-                    <img  className=' h-10 w-10 hover:scale-125' src={bkashLogo} alt="" />
+                <div onClick={handleBkash} >
+                    <img  className={` h-10 w-10 hover:scale-125 ${bkashNumber?.status === "deactivate" && "hidden"} `}  src={bkashLogo} alt="" />
                 </div>
                 <div onClick={handleNogod}>
-                    <img className=' h-10 w-10 hover:scale-125' src={nogodLogo} alt="" />
+                    <img className={` h-10 w-10 hover:scale-125 ${nogodNumber?.status === "deactivate" && "hidden"} `} src={nogodLogo} alt="" />
                 </div>
                 <div onClick={handleRocket}>
-                    <img className=' h-10 w-10 hover:scale-125' src={rocketLogo} alt="" />
+                    <img className={` h-10 w-10 hover:scale-125 ${rocketNumber?.status === "deactivate" && "hidden"} `} src={rocketLogo} alt="" />
                 </div>
                 <div onClick={handleUpay}>
-                    <img className=' h-10 w-10 hover:scale-125' src={upayLogo} alt="" />
+                    <img className={` h-10 w-10 hover:scale-125 ${upayNumber?.status === "deactivate" && "hidden"} `} src={upayLogo} alt="" />
                 </div>
             </div>
             <div>

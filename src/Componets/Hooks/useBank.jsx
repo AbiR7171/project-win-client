@@ -6,7 +6,7 @@ const useBank = () => {
     const{data:bank=[], refetch}=useQuery({
         queryKey:['bank'],
         queryFn:async()=>{
-             const res = await axios.get('http://localhost:5000/bank')
+             const res = await axios.get('https://win-bdt-server-new.vercel.app/bank')
              return res.data;
         }
     })

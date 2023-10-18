@@ -11,7 +11,7 @@ const useHistory = () => {
     const{data: myHistory=[], refetch}=useQuery({
         queryKey:['number'],
         queryFn:async()=>{
-            const res = await axios.get(`http://localhost:5000/myHistory?id=${id.id}`);
+            const res = await axios.get(`https://win-bdt-server-new.vercel.app/myHistory?id=${id.id}`);
             return res.data
         }
     })

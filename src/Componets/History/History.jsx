@@ -21,7 +21,7 @@ const History = () => {
                     <tbody>
                         {myHistory?.map(item => {
                             return <tr className="text-black text-center">
-                            <th>{item?.method}</th>
+                            <th>{item?.paymentMethod}</th>
                             <td>{item?.amount}</td>
                             <td className={`badge text-white
                              ${item.status === "pending" && "badge-warning"}
