@@ -13,6 +13,9 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
+import SignUP from './Login/SignUP';
+import AuthProvider from './AuthProvider/AuthProvider';
+import OTP from './Componets/OTP';
 
 
 // Create a client
@@ -27,15 +30,26 @@ const router = createBrowserRouter([
   {
     path:'/layout/:id',
     element:<Home/>
+  },
+  {
+    path:"/signUp",
+    element:<SignUP/>
+  },
+  {
+    path:"/authentication/:id",
+    element:<OTP/>
   }
+  
 ]);
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode> 
 
    <QueryClientProvider client={queryClient}>
  
+  <AuthProvider>
   <RouterProvider router={router} /> 
 
+  </AuthProvider>
   </QueryClientProvider>
  
   </React.StrictMode>,
