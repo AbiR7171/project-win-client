@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
 import useBank from '../Hooks/useBank';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
+import useUsers from '../Hooks/useUsers';
+
 
 
 const Deposit = () => { 
@@ -20,6 +22,7 @@ const Deposit = () => {
    
     const [number, setNumber]=useState();
     const [deposit,setDeposit]=useState();
+    const [selected,setSelected]=useState();
     const [trx,setTrx]=useState();
     const[method, setMethod]=useState()
     const[show, setShow]=useState(true)
@@ -27,6 +30,9 @@ const Deposit = () => {
     const[copied, setCopied]=useState(false)
 
     console.log(bank);
+    const [users]=useUsers();
+
+    console.log(users, "user");
   
   
     const getId = useParams();
@@ -79,7 +85,7 @@ const Deposit = () => {
         
         //   console.log(bkashNumber.number);
           if(bkashNumber.status === "active"){ 
-
+             setSelected("bkash")
             setMethod('bkash')
             setNumber(bkashNumber?.number)
             const Toast = Swal.mixin({
@@ -123,7 +129,7 @@ const Deposit = () => {
          
         //   console.log(nogodNumber.number); 
         if(nogodNumber.status === "active"){ 
-
+          setSelected("nogod")
             setMethod("nogod")
             setNumber(nogodNumber?.number)
             const Toast = Swal.mixin({
@@ -166,7 +172,7 @@ const Deposit = () => {
               
         
           if(rocketNumber.status === "active"){ 
-
+            setSelected("rocket")
              setMethod('rocket')
             setNumber(rocketNumber?.number)
 
@@ -212,7 +218,7 @@ const Deposit = () => {
           
 
           if(upayNumber?.status === "active"){ 
-
+            setSelected("upay")
             setMethod('upay')
             setNumber(upayNumber?.number)
             const Toast = Swal.mixin({
@@ -259,16 +265,25 @@ const Deposit = () => {
         
     }
     const handleTrxAndDepositData=()=>{
-        const trxData=depositRef.current.value;
+        const trxData=trxRef.current.value;
+        console.log(trxData);
         setTrx(trxData);
         axios.post('https://win-bdt-server-new.vercel.app/trx',{
             amount:deposit,trx:trxData,date:moment().format('YYYY-MM-DD hh:mm:ss'),
-            id:getId?.id,paymentMethod:method,status:"pending",method:"deposit" 
+            id:getId?.id,paymentMethod:method,status:"pending",method:"deposit", number:users?.number
 
         })
         .then(res=>{
             console.log(res.data);
-            if(res.data.insertedId){
+            if(res.data.insertedId){ 
+
+                axios.post("https://win-bdt-server-new.vercel.app/trxNotification", {
+                    trxInsertId: res.data.insertedId
+                })
+                .then(res => {
+                         console.log(res.data);
+                })
+
                 const Toast = Swal.mixin({
                     toast: true,
                     position: 'top-end',
@@ -305,78 +320,107 @@ const Deposit = () => {
 
     return (
 
-        <div className='deposit mb-20'>
-            <p className="text-yellow-500 text-xl left-border">Funds</p>
-            <div className="border border-spacing-2 mt-2"></div>
+        <div className='deposit mb-20 lg:p-2 '>
+       <div className='bg-[#5a5656] p-2 '>
+
+     
+          <h3 className="text-yellow-600 mt-4">Funds</h3>
+     
+            
+        <hr />
 
             {/* logo container  */}
 
 
             <div className='flex justify-around p-4 mt-5'>
-                <div onClick={handleBkash} >
-                    <img  className={` h-10 w-10 hover:scale-125 ${bkashNumber?.status === "deactivate" && "hidden"} `}  src={bkashLogo} alt="" />
+                <div className={` p-2 rounded-md  ${selected === "bkash" ? "bg-[#047857]" : "bg-[#ffffffd8]"} ${bkashNumber?.status === "deactivate" && "hidden"}  `} onClick={handleBkash}>
+                    <img  className={` h-10 w-10 hover:scale-125 ${bkashNumber?.status === "deactivate" && "hidden"}`}  src={bkashLogo} alt="" />
                 </div>
-                <div onClick={handleNogod}>
+                <div className={` p-2 rounded-md  ${selected === "nogod" ? "bg-[#047857]" : "bg-[#ffffffd8]"} ${nogodNumber?.status === "deactivate" && "hidden"}  `}  onClick={handleNogod}>
                     <img className={` h-10 w-10 hover:scale-125 ${nogodNumber?.status === "deactivate" && "hidden"} `} src={nogodLogo} alt="" />
                 </div>
-                <div onClick={handleRocket}>
+                <div className={` p-2 rounded-md  ${selected === "rocket" ? "bg-[#047857]" : "bg-[#ffffffd8]"}  ${rocketNumber?.status === "deactivate" && "hidden"} `}  onClick={handleRocket}>
                     <img className={` h-10 w-10 hover:scale-125 ${rocketNumber?.status === "deactivate" && "hidden"} `} src={rocketLogo} alt="" />
                 </div>
-                <div onClick={handleUpay}>
+                <div className={` p-2 rounded-md  ${selected === "upay" ? "bg-[#047857]" : "bg-[#ffffffd8]"}  ${upayNumber?.status === "deactivate" && "hidden"} `} onClick={handleUpay}>
                     <img className={` h-10 w-10 hover:scale-125 ${upayNumber?.status === "deactivate" && "hidden"} `} src={upayLogo} alt="" />
                 </div>
             </div>
             <div>
-                <div className="flex justify-between mt-16">
-                    <h1 className='text-xl text-yellow-500 left-border'>Deposit</h1>
-                    <div className='flex'>
-                        <p className='text-2xl text-yellow-500'>2000</p>
-                        <Icon className='text-2xl text-yellow-500' icon="mdi:bangladeshi-taka" />
+
+
+                <div className="flex justify-between items-center mt-8 ">
+
+
+                <h3 className="text-yellow-600   ">Deposit</h3>
+              
+            
+
+          
+        
+                
+                    <div className='flex '>
+                        <p className=' text-[#bdb8b8] text-[10px]'> <span className='text-[12px]'>৳</span> 200 - <span className='text-[12px]'>৳</span> 25000</p>
+                       
                     </div>
                 </div>
-                <div className="border border-spacing-2 mt-2"></div>
+
+                <hr /> 
+                {/* <div className="border border-spacing-2 mt-2"></div> */}
 
 
                 {/* deposit input tag */}
 
 
-                <div>
-                    <input ref={depositRef} type="number" className='p-2 my-3 rounded w-full bg-gray-600 outline-orange-600' name="" id="" placeholder='0.00' />
+                <div className=' flex py-4'>
+                <input ref={depositRef} type="text" className="w-full   text-gray-400 inputs " 
+                 placeholder="0.00 ৳" 
+                 oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 5)"/>
+                  
                 </div>
-                <div className='flex justify-between m-4 text-white'>
-                    <div>
+                <div className='flex justify-between items-center  '>
+                    <div className='text-[#bdb8b8]  mt-2  text-[10px]'>
                         <p>১০০০ টাকা এর বেশি ডিপোজিট করলে ৫০ টাকা বোনাস পাবেন ।</p>
                         <p>টাকা সেন্ট মানি করুন কোন প্রকার খরচ নেই ।</p>
                     </div>
-                    <div>
-                        <button onClick={handleDepositRef} className='btn px-3 py-1 text text-white bg-green-700 rounded'>Payment</button>
+                    <div className={`${!show && "hidden"}`}>
+                        <button onClick={handleDepositRef} className=' px-3 py-1 text text-white rounded bg-[#047857] '>Payment</button>
                     </div>
                 </div>
-                 <div className="border border-spacing-4 mt-2"></div> 
-
+       </div>
+             
+    
+       {/* <div className='divider bg-gray-900' /> */}
 
                 {/* order information section  */}
-          <div className={show && "hidden"}>
+          <div className={`${show && "hidden"} `}>
 
-          <div>
-                    <p className="text-yellow-500 text-xl ms-3 left-border">Order Information</p>
-                    <div className="border border-spacing-2 mt-2"></div>
+          <div>      
+          <h3 className="text-yellow-600 p-2 mt-2 mb-4 ">Order Information</h3>
+          
+
+        <hr />
+          
+                    {/* <div className="border border-spacing-2 mt-2"></div> */}
                 </div>
-                <div className='flex gap-3'>
-                    <div className='m-3'>
-                        <img className='w-12 h-12' src={nogodLogo} alt="" />
+                <div className='flex gap-3 py-4'>
+                    <div className=''>
+                        <img className='w-16 h-16' src={selected === "bkash" && bkashLogo ||
+                       selected === "nogod"  && nogodLogo ||
+                       selected === "rocket" && rocketLogo ||
+                       selected === "upay" && upayLogo} alt="" />
                     </div>
-                    <div className='mt-3 text-white'>
-                        <div className='flex gap-2'>
+                    <div className=' text-white  '>
+                        <div className='flex  gap-2 '>
                             <p className='text-xl'>{number}</p>
                            <CopyToClipboard text={number}>
-                             <Icon onClick={handleCopy} className='text-2xl' icon="akar-icons:copy" />
+                             <Icon onClick={handleCopy} className=' text-green-600' icon="akar-icons:copy" />
                            </CopyToClipboard>
                         </div>
                         <div className='flex gap-2'>
                         <p className='text-xl'>{deposit}</p>
                            <CopyToClipboard text={deposit}>
-                           <Icon onClick={handleCopy} className='text-2xl' icon="akar-icons:copy" />
+                           <Icon onClick={handleCopy} className='text-green-600' icon="akar-icons:copy" />
                            </CopyToClipboard>
                           
                         </div>
@@ -385,14 +429,20 @@ const Deposit = () => {
                     </div>
                 </div>
                 {/* Tarnxaction input  */}
-                <div>
-                    <input ref={trxRef} type="text" className='p-2 my-3 rounded w-full bg-gray-600 outline-orange-600' name="" id="" placeholder='Trx :' />
+                <div className=''>
+                    <input ref={trxRef} type="text"  placeholder='Trx :' className='trx inputs ' />
                 </div>
-                <div className="border border-spacing-5 mt-2"></div>
-            <div className='py-6'>
-                <button onClick={handleTrxAndDepositData} className='flex justify-center px-3 py-2 my-3 text-white bg-green-700 rounded w-full fw-bold'>Submitted</button>
+                {/* <div className="border border-spacing-5 mt-2"></div> */}
+
+             
+        
             </div>
-            </div>
+
+           
+              <div className={`${show && "hidden"}`}>
+              <button  onClick={handleTrxAndDepositData} className='flex justify-center px-3 py-2 my-3 text-white  rounded w-full border-0 bg-[#047857]  fw-bold'>Submitted</button>
+              </div>
+            
            
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React from 'react';
+
 import { useParams } from 'react-router-dom';
 
 const useHistory = () => { 
@@ -9,7 +9,7 @@ const useHistory = () => {
     console.log(id, "id");
     
     const{data: myHistory=[], refetch}=useQuery({
-        queryKey:['number'],
+        queryKey:['number', id.id],
         queryFn:async()=>{
             const res = await axios.get(`https://win-bdt-server-new.vercel.app/myHistory?id=${id.id}`);
             return res.data

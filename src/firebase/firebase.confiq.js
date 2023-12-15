@@ -5,14 +5,13 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyB2J0EV51vnUUd3OovjUxwBoSHpOEJOukE",
-  authDomain: "winbdt-client.firebaseapp.com",
-  projectId: "winbdt-client",
-  storageBucket: "winbdt-client.appspot.com",
-  messagingSenderId: "525469868858",
-  appId: "1:525469868858:web:5c792bfdb2b2f119b92603"
+  apiKey: "AIzaSyCvOy5ps89hWgkcgUXtmlIVpcPfmlGc46U",
+  authDomain: "winbdt-20023.firebaseapp.com",
+  projectId: "winbdt-20023",
+  storageBucket: "winbdt-20023.appspot.com",
+  messagingSenderId: "297663831416",
+  appId: "1:297663831416:web:0bba131d0d5f4839743c8d"
 };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export default app;

@@ -1,10 +1,17 @@
-import React, { useContext } from 'react';
-import { AuthContext } from '../AuthProvider/AuthProvider';
+import React, { useContext, useState } from 'react';
+// import { AuthContext } from '../AuthProvider/AuthProvider';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Link, useNavigate } from 'react-router-dom';
+import logo from "../assets/images/logo.webp"
+import { Icon } from '@iconify/react';
+import moment from 'moment';
 
 const SignUP = () => { 
+
+    const [error, setError]=useState()
+    const [show1, setShow1]=useState(false);
+    const [show2, setShow2]=useState(false);
 
     const navigate = useNavigate()
 
@@ -20,6 +27,10 @@ const SignUP = () => {
           const confirmPassword = form.confirmPin.value;
 
 
+          const trimName = name.trim()
+          console.log(trimName);
+
+
           if(confirmPassword !== password){
             return Swal.fire({
                 icon: 'error',
@@ -28,29 +39,34 @@ const SignUP = () => {
               })
           } 
 
-          const isValid =/^(?=.*[0-9])/.test(name);
+       
+          const isPasswordvalid = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/.test(password);
 
-          console.log(isValid);
+          console.log(isPasswordvalid);
 
-          if(!isValid){
+          if(!isPasswordvalid){
             return Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: "Name already taken. Add some number",
+                text: "password must be contain Minimum eight characters, at least one uppercase letter, one lowercase letter, one number and one special character:",
               })
           }
 
+        
+
+       
 
           axios.post("https://win-bdt-server-new.vercel.app/users", {
-             name,
+             name :trimName,
              number,
-             password
+             password,
+             date:moment().format("DD/MM/YYYY")
           })
           .then(res =>{ 
                    
                    console.log(res.data);
                    if(res.data.insertedId){
-                    navigate(`/authentication/${name}`)
+                    navigate(`/layout/${name}`)
                     Swal.fire({
                         position: 'top-end',
                         icon: 'success',
@@ -74,36 +90,121 @@ const SignUP = () => {
 
     }
     return (
-        <div className='bg-blue-500 h-full p-2'>
-         
-                                 <div  className="container mx-auto p-6 mt-12 bg-white shadow-md rounded-lg ">
-        <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
-        <form onSubmit={handleForm} className="space-y-4">
-            <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700">User Name</label>
-                <input type="text"  name="signupUsername" className="mt-1 p-2 w-full border rounded-md"/>
+        <div className="loginBg">
+        <div className="main flex flex-col items-center justify-center">
+        <header className="page-header">
+          <div className="header-logo">
+          <a href="https://www.winbdt.com/"><img src={logo} alt="" /></a>
+          </div>
+        </header>
+        <form onSubmit={handleForm} className="login-box">
+          <div className="form-login">
+            <div className="form-group flex">
+           <div className="bg-black w-12 h-12 rounded flex justify-center items-center">
+           <Icon icon="zondicons:user" className="text-white "/>
+           </div>
+              <input
+                className="form-control w-full"
+                maxLength={20}
+                name='signupUsername'
+                type="input"
+                autoCapitalize="off"
+                autoCorrect="off"
+                placeholder="User Name"
+                
+              />
             </div>
-            <div className="w-full">
-                <label  className="block text-sm font-medium text-gray-700">Account Number</label>
-                <input type="text"  name="accountNumber" className="mt-1 p-2 w-full border rounded-md"/>
+            <div className="form-group flex">
+           <div className="bg-black w-12 h-12 rounded flex justify-center items-center">
+           <Icon icon="la:mobile" className="text-white "/>
+           </div>
+              <input
+                className="form-control w-full"
+                maxLength={20}
+                name='accountNumber'
+                type="input"
+                autoCapitalize="off"
+                autoCorrect="off"
+                placeholder="User Number"
+                
+              />
             </div>
-            <div className="w-full">
-               
+            <div className="form-group flex">
+           <div className="bg-black w-12 h-12 rounded flex justify-center items-center">
+          <Icon icon="ph:lock-fill" className="text-white "/>
+           </div>
+              <input
+                className="form-control w-full"
+                maxLength={20}
+                name='pin'
+                type={`${show1 ? "input": "password"}`}
+                autoCapitalize="off"
+                autoCorrect="off"
+                placeholder="Password"
+                
+              />
+         {
+             show1 ?  <Icon onClick={()=>setShow1(!show1)}  icon="mdi:eye-off-outline" className='absolute end-2 mt-3 text-2xl  text-black' /> :
+             <Icon onClick={()=>setShow1(!show1)} icon="pepicons-pencil:eye" className='absolute end-2 mt-3 text-2xl  text-black' />
+           }
             </div>
-            <div className="w-full">
-                <label  className="block text-sm font-medium text-gray-700">Pin Number</label>
-                <input type="password" name="pin" className="mt-1 p-2 w-full border rounded-md"/>
-            </div>
-            <div className="w-full">
-                <label className="block text-sm font-medium text-gray-700">Confirm Pin</label>
-                <input type="password"  name="confirmPin" className="mt-1 p-2 w-full border rounded-md"/>
-            </div>
-            <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded-md">Register</button>
-        </form>
-        <button  className="mt-4 text-blue-500 underline">Already have an account? <Link to="/">Login</Link></button>
-    </div>
 
+            <div className="form-group flex">
+            <div className="bg-black w-12 h-12 rounded flex justify-center items-center">
+           <Icon icon="ph:lock-fill" className="text-white "/>
+           </div>
+              <input
+                className="form-control w-full"
+                name='confirmPin'
+                type={`${show2 ? "input": "password"}`}
+                autoCapitalize="off"
+                autoCorrect="off"
+                placeholder="Confirm password"
+                
+              />
+             {
+             show2 ?  <Icon onClick={()=>setShow2(!show2)}  icon="mdi:eye-off-outline" className='absolute end-2 mt-3 text-2xl  text-black' /> :
+             <Icon onClick={()=>setShow2(!show2)} icon="pepicons-pencil:eye" className='absolute end-2 mt-3 text-2xl text-black' />
+           }
+            </div>
+          </div>
+          <div className="button-area mt-4">
+            <button
+              className="btn-primar w-full bg-green-600"
+              type="submit"
+              value="submit"
+              
+            >
+              Submit
+            </button>
+          {
+            error &&   <div className="txt-error" style={{}}>
+            <p className="" id="errorMsg" style={{}}>
+              {error}
+              <br />
+            </p>
+          </div>
+          }
+            <Link to="/">
+            <button
+              className="btn-primary w-full "
+          
+            >
+              Login
+            </button>
+            </Link>
+          </div>
+          <footer className="txt-support">
+            <span className="txt">
+              Our platform is most compatible with: Google Chrome / Safari
+            </span>
+          </footer>
+        </form>
+      </div>
+      
+      
         </div>
+  
     );
 };
 
