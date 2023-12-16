@@ -1,0 +1,288 @@
+.bg-image{
+    background-image: url('./../../assets/images/member-header-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 25vh;
+}
+.bg-images{
+    background-image: url('./../../assets/images/member-header-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    height: 100vh;
+}
+
+.header{
+    background-image: url('./../../assets/images/member-header-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 32vh;
+
+    
+  
+  
+  }
+
+  .inputs{
+    background-color: #252222;
+    color: whitesmoke;
+    padding: 3px 10px;
+    border-radius: 3px;
+    margin: 10px 0px;
+    width: 100%;
+    text-align: right;
+}
+.inputs:focus{
+    outline: rgb(255, 145, 0);
+    outline-style: ridge;
+    text-align: right;    
+}
+/* input:focus{
+    outline: rgb(255, 145, 0);
+    outline-style: ridge;
+    text-align: right;    
+} */
+
+.Membar-Menu-Box{
+    width: 100%;
+    height: auto;
+    margin: 0 0 2.6666666667vw;
+    /* background-color: ; */
+  }
+  
+
+  /* Apply this CSS to the active tab */
+.react-tabs__tab--selected {
+    background-color:  rgb(4, 120, 87);
+    color: white; /* Set the text color for better visibility */
+    
+  }
+  *:focus {
+    outline: none;
+  }
+
+
+
+  .borders-color{
+    background-color:  rgb(4, 120, 87);
+  }
+
+
+  .borders{
+    color: whitesmoke;
+    border-left: 3px solid rgb(4, 120, 87);;
+    /* padding: 7px; */
+    font-size: 15px;
+    line-height: 10px;
+    font-weight: 600;
+    padding-left: 10px !important;
+  
+}
+
+
+hr{
+    margin-top: 10px;
+    border: none;
+    background-color: rgb(112, 116, 115) ;
+    height: 2px; /* You can adjust the height as needed */
+}
+
+.trx::placeholder {
+    text-align: left;
+    padding-left: 10px; /* Optional: Add some left padding for spacing */
+  }
+
+ .trx::placeholder:focus{
+    text-align: right;
+    padding-left: 10px; /* Optional: Add some left padding for spacing */
+  } 
+
+
+  /* .trx:focus{
+     text-align: right;
+  } */
+  h3{
+    color: whitesmoke;
+    border-left: 3px solid rgb(4, 120, 87);
+    padding: 7px;
+    font-size: 15px;
+    line-height: 10px;
+    font-weight: 600;
+}
+
+input {
+    background-color: gray; /* Use your desired color value */
+    color: #000; /* Optionally, change the text color to ensure readability */
+  }
+
+@media (max-width: 768px) {
+    .header {
+        background-image: url('./../../assets/images/member-header-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 25vh;
+
+    }
+  }
+
+
+
+
+  .loginBg{
+    background-image: url("../../assets/images/Backround.jpg");
+    width: 100vw;
+    height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+ }
+ 
+ 
+ .inputColor{
+   background-color: rgba(255,255,255,0.65) !important;
+ }
+ 
+ 
+ body {
+   background-image: url(Backround.jpg);
+   background-size: cover;
+ }
+ .site-background {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100vh;
+   background-position: center;
+   background-repeat: no-repeat;
+   background-size: cover;
+   z-index: 0;
+   pointer-events: none;
+   cursor: none;
+ }
+ .main {
+   position: relative;
+   max-width: 400px;
+   margin: 0 auto;
+   background: none;
+   height: 100vh;
+   margin-bottom: 0;
+   margin-top: 0;
+ }
+ input::placeholder {
+   color: #464646;
+ }
+ .page-header {
+   background: transparent;
+   margin-bottom: 30px;
+ }
+ .header-logo {
+   max-width: 230px;
+   margin: 0 auto;
+ }
+ 
+ .login-box {
+   position: relative;
+   padding-bottom: 10px;
+ }
+ .form-group {
+   padding-bottom: 10px;
+ }
+ .login-box .form-group i {
+   width: 50px;
+   text-align: center;
+   color: #fff;
+   line-height: 48px;
+   font-size: 25px;
+   background: #000;
+   border-radius: 5px 0 0 5px;
+ }
+ 
+ .form-control {
+   cursor: pointer;
+   border: none;
+   height: 48px;
+   padding-left: 10px;
+   font-size: 20px;
+   background: rgba(255, 255, 255, 0.65);
+   letter-spacing: normal;
+   border-radius: 0 5px 5px 0;
+   cursor: text;
+ }
+ .checkmark {
+   position: absolute;
+   top: 0;
+   left: auto;
+   right: 2px;
+   height: 25px;
+   width: 25px;
+   background-color: #fff;
+   border-radius: 50%;
+   border: 2px solid #afafaf;
+ }
+ .btn-primary {
+   line-height: 44px;
+   border-radius: 5px;
+   color: #fff;
+   text-shadow: 0 2px 3px #00000061;
+   font-size: 120%;
+   font-weight: bold;
+   margin-bottom: 10px;
+   border: 2px solid #fdab01;
+   background: linear-gradient(0deg, #ffbf00, #da7400);
+   box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.65),
+     inset 0 0.0625rem 0.125rem 0 rgba(255, 255, 255, 0.7);
+ }
+ .btn-primar {
+   line-height: 44px;
+   border-radius: 5px;
+   color: #fff;
+   text-shadow: 0 2px 3px #00000061;
+   font-size: 120%;
+   font-weight: bold;
+   margin-bottom: 10px;
+   border: 2px solid #fcfcfc;
+ 
+   box-shadow: 0 0.125rem 0.125rem 0 rgba(0, 0, 0, 0.65),
+     inset 0 0.0625rem 0.125rem 0 rgba(255, 255, 255, 0.7);
+ }
+ 
+ .txt-error {
+   position: relative;
+   width: 100%;
+   padding: 5px 0px;
+   font-size: 85%;
+   display: block;
+   line-height: normal;
+   background-color: #c62626ef;
+   padding: 5px 10px;
+   border-radius: 6px;
+   margin-bottom: 10px;
+   color: #fff;
+ }
+ .txt-support {
+   background-color: rgba(0, 0, 0, 0.5);
+   padding: 10px;
+   border-radius: 6px;
+   text-align: center;
+ }
+ span {
+   display: inline-block;
+ }
+ .txt {
+   font-size: 12px;
+   color: #ffffff;
+   font-weight: normal;
+ }
+ 
+
+ .active{
+      background-color: #047857;
+ }
+
+ .space{
+     letter-spacing: 1px;
+ }
